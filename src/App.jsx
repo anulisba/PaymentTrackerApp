@@ -22,7 +22,6 @@ function payStatus(g) {
 function fmt(n) { return "₹" + Number(n).toLocaleString("en-IN"); }
 function monthKey(date) { const d = new Date(date); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`; }
 function monthLabel(key) { const [y, m] = key.split("-"); return new Date(y, m - 1, 1).toLocaleString("default", { month: "long", year: "numeric" }); }
-function typeEmoji(type) { return { Wedding: "💍", "Club Night": "🎷", "Private Party": "🎉", Festival: "🎪", Corporate: "🏢", "Acoustic Set": "🎸", Birthday: "🎂", Other: "🎵" }[type] || "🎵"; }
 
 function Toast({ message, type }) {
   if (!message) return null;
@@ -266,10 +265,9 @@ function GigCard({ gig, onTap }) {
   return (
     <button className="tap row" onClick={() => onTap(gig)}
       style={{ width: "100%", background: "#212121", border: "1px solid #2a2a2a", borderRadius: 16, padding: "14px 16px", textAlign: "left", display: "flex", alignItems: "center", gap: 12 }}>
-      <div style={{ width: 44, height: 44, borderRadius: 13, background: "#2a2a2a", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, flexShrink: 0 }}>{typeEmoji(gig.type)}</div>
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 3 }}>
-          <p style={{ fontSize: 14, fontWeight: 600, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{gig.client}</p>
+          <p style={{ fontSize: 14, fontWeight: 600, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", color: "white" }}>{gig.client}</p>
           <span style={{ width: 7, height: 7, borderRadius: 4, background: gig.confirmed ? "#5bb974" : "#a78bfa", flexShrink: 0 }} />
         </div>
         <p style={{ fontSize: 12, color: "#555" }}>{new Date(gig.date).toLocaleDateString("en-IN", { day: "numeric", month: "short" })} · {gig.type}</p>
@@ -301,9 +299,8 @@ function GigDetail({ gig, onBack, onEdit, onDelete, onToggleConfirm }) {
     <div style={{ padding: "20px 16px" }}>
       <button className="tap" onClick={onBack} style={{ background: "none", border: "none", color: "#c98a3a", fontSize: 14, padding: 0, marginBottom: 24 }}>← Back</button>
       <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 20 }}>
-        <div style={{ width: 56, height: 56, borderRadius: 18, background: "#212121", border: "1px solid #2a2a2a", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 26 }}>{typeEmoji(gig.type)}</div>
         <div>
-          <h1 style={{ fontSize: 20, fontWeight: 700 }}>{gig.client}</h1>
+          <h1 style={{ fontSize: 20, fontWeight: 700, color: "white" }}>{gig.client}</h1>
           <p style={{ fontSize: 12, color: "#666", marginTop: 4 }}>{gig.type} · {new Date(gig.date).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}</p>
         </div>
       </div>
@@ -398,7 +395,7 @@ function GigForm({ gig, onSave, onBack }) {
       <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
         <div>
           <label style={lbl}>Client / Event</label>
-          <input style={inp} value={form.client} onChange={e => set("client", e.target.value)} placeholder="e.g. Priya & Rajan Wedding" />
+          <input style={inp} value={form.client} onChange={e => set("client", e.target.value)} placeholder="Event Type" />
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
           <div>
